@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { SignJTW, SignJWT } from "jose"
+import { SignJWT } from "jose"
 import connectDB from "../../../utils/database"
 import { UserModel } from "../../../utils/schemaModels"
 
@@ -17,7 +17,6 @@ export async function POST(request){
           email: reqBody.email
         }
         const token = await new SignJWT(payload).setProtectedHeader({alg: "HS256"}).setExpirationTime("1d").sign(secretKey)
-        console.log(token)
         return NextResponse.json({ message: "ログイン成功", token: token })
       }else{
         // パスワードが間違っている場合の処理
